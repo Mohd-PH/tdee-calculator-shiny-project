@@ -1,0 +1,57 @@
+---
+title: "TDEE calculator pitch presentation"
+author: "MohdPH"
+date: "6/8/2020"
+output: 
+  ioslides_presentation:
+    css: presentation.css
+---
+
+
+## What is TDEE
+
+TDEE is the Total Daily Energy Expenditure
+
+It is an estimation of how many calories you burn per day when exercise is taken into account. It is calculated by first figuring out your Basal Metabolic Rate, then multiplying that value by an activity multiplier
+
+
+## What formula to use
+
+We will use the Mifflin-St Jeor Formula
+
+<blockquote>
+Nowadays, the Mifflin-St Jeor equation is believed to give the most accurate result and, is therefore what we used in this calculator. This BMR formula is as follows: BMR (kcal / day) = 10 * weight (kg) + 6.25 * height (cm) – 5 * age (y) + s (kcal / day) , where s is +5 for males and -161 for females.
+</blockquote>
+
+
+## Activity factors
+
+We need to multipy the basal metabolic rate with the activity factor to get the TDEE
+
+Activity factors are
+
+| Activity          | Factor |
+|-------------------|--------|
+| Sedentary         | 1.2    |
+| Light exercise    | 1.375  |
+| Moderate exercise | 1.55   |
+| Heavy exercise    | 1.725  |
+| Athelete          | 1.9    |
+
+
+## The formula coded in R with an example
+
+Here is an example for calculating the TDEE for a 36 years old female, 56 kilograms and 167 in height. who is sedentry
+
+```{r}
+calculatebasalmetabolicrate <- function(
+  weightKG,
+  heightCM,
+  age, 
+  male = TRUE
+  ){
+    (10 * as.numeric(weightKG)) + (6.25 * as.numeric(heightCM)) - 
+    (5 * as.numeric(age)) + ifelse(male, 5, -161)
+}
+calculatebasalmetabolicrate(56,167,36,FALSE) * 1.2
+```
